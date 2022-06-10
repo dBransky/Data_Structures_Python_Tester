@@ -39,7 +39,7 @@ class TestGen:
         return f'SumOfBumpGradeBetweenTopWorkersByGroup  {str(random.randint(0, self.companies + 10))} {str(random.randint(0, 500))}'
 
     def rand_test_acq(self):
-        return f'AcquireCompany {str(random.randint(0, self.companies + 3))} {str(random.randint(0, self.companies + 3))} {str(random.randint(0, 5))}'
+        return f'AcquireCompany {str(random.randint(0, self.companies + 3))} {str(random.randint(0, self.companies + 3))} {str(round(random.uniform(0, 2), 2))}'
 
     def rand_test_rem(self):
         return f'RemoveEmployee {str(random.randint(0, self.total_emp + 3))}'

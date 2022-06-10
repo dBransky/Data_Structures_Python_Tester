@@ -143,7 +143,7 @@ class HighTech:
     def company_value(self, id):
         if id<=0 or id>self.k:
             raise Invalid()
-        return str(float(self.company_vals[id]))
+        return self.format_print(str(float(self.company_vals[id])),False)
 
     def format_print(self, line, round):
         if (line.split('.')[1]) == '0':
