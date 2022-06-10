@@ -97,7 +97,7 @@ class HighTech:
             emp.sort(key=lambda x: (x.salary, x.id), reverse=True)
             grades = [x.grade for x in emp]
             if m <= len(grades):
-                return self.format_print(str(sum(grades[:m])), True)
+                return self.format_print(str(sum(grades[:int(m)])), True)
             raise Fail()
         while com_id in self.deleted_companies:
             com_id = self.deleted_companies[com_id]
@@ -141,6 +141,8 @@ class HighTech:
         return 'done.'
 
     def company_value(self, id):
+        if id<=0 or id>self.k:
+            raise Invalid()
         return str(float(self.company_vals[id]))
 
     def format_print(self, line, round):
@@ -152,14 +154,13 @@ class HighTech:
         else:
             return line.split('.')[0] + '.' + line.split('.')[1][0]
 
-
 if __name__ == '__main__':
     funcs = {'Init': HighTech, 'AddEmployee': HighTech.add_employee, 'EmployeeSalaryIncrease': HighTech.salary_increase,
              'PromoteEmployee': HighTech.promote_employee, 'AverageBumpGradeBetweenSalaryByGroup': HighTech.avg_grades,
              'SumOfBumpGradeBetweenTopWorkersByGroup': HighTech.sum_grades, 'AcquireCompany': HighTech.acquire_company,
              'Quit': HighTech.quit, 'RemoveEmployee': HighTech.remove_employee, 'CompanyValue:': HighTech.company_value}
-    for i in range(99):
-        out_file = open('our_out.txt','w')
+    for i in range(100):
+        out_file = open(f'out{i}.txt', 'w+')
         with open(f'in{i}.txt') as file:
             lines = file.readlines()
             lines = [line.strip('\n') for line in lines]
@@ -169,9 +170,6 @@ if __name__ == '__main__':
             high_tech = None
             num = 0
             for line in lines:
-                num += 1
-                if num == 445:
-                    z = 1
                 try:
                     if high_tech is None:
                         out = high_tech = line[1](*line[2], out_file)
@@ -182,9 +180,13 @@ if __name__ == '__main__':
                         else:
                             out_file.write(f'{line[0]}: {out}\n')
                 except Fail:
-                    out_file.write(f'{line[0]}: FAILURE\n')
+                    if line[0] == 'CompanyValue:':
+                        out_file.write(f'{line[0]} FAILURE\n')
+                    else:
+                        out_file.write(f'{line[0]}: FAILURE\n')
                 except Invalid:
-                    out_file.write(f'{line[0]}: INVALID_INPUT\n')
+                    if line[0] == 'CompanyValue:':
+                        out_file.write(f'{line[0]} INVALID_INPUT\n')
+                    else:
+                        out_file.write(f'{line[0]}: INVALID_INPUT\n')
         out_file.close()
-        if not filecmp.cmp('our_out.txt', f'out{i}.txt'):
-            print(f'error at {i}')
