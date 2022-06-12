@@ -149,7 +149,7 @@ class HighTech:
         if whole:
             return str(line)
         else:
-            if str(line).split('.')[1][0] == '9' and float(str(line).split('.')[1][1:]) > 0.5:
+            if str(line).split('.')[1][0] == '9' and float('0.'+str(line).split('.')[1][1:]) > 0.5:
                 return str(round(line, 0))
             return str(round(line, 1))
 
@@ -160,9 +160,9 @@ if __name__ == '__main__':
              'SumOfBumpGradeBetweenTopWorkersByGroup': HighTech.sum_grades, 'AcquireCompany': HighTech.acquire_company,
              'Quit': HighTech.quit, 'RemoveEmployee': HighTech.remove_employee, 'CompanyValue:': HighTech.company_value}
     lines = 50000
-    for i in range(100):
+    for i in range(1):
         test_gen.TestGen(f'in{i}.txt', lines)
-    for i in range(100):
+    for i in range(1):
         out_file = open(f'out{i}.txt', 'w+')
         with open(f'in{i}.txt') as file:
             lines = file.readlines()
