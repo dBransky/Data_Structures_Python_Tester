@@ -21,9 +21,16 @@ class Invalid(Exception):
     pass
 
 
+class InitFailed(Exception):
+    pass
+
+
 class HighTech:
 
     def __init__(self, k, out_file):
+        if k <= 0:
+            out_file.write('Init failed.\n')
+            raise InitFailed()
         self.k = k
         self.companies = {x: {} for x in range(1, int(k) + 1)}
         self.company_vals = {x: x for x in range(1, int(k) + 1)}
@@ -149,7 +156,7 @@ class HighTech:
         if whole:
             return str(line)
         else:
-            if str(line).split('.')[1][0] == '9' and float('0.'+str(line).split('.')[1][1:]) > 0.5:
+            if str(line).split('.')[1][0] == '9' and float('0.' + str(line).split('.')[1][1:]) > 0.5:
                 return str(round(line, 0))
             return str(round(line, 1))
 
@@ -160,9 +167,9 @@ if __name__ == '__main__':
              'SumOfBumpGradeBetweenTopWorkersByGroup': HighTech.sum_grades, 'AcquireCompany': HighTech.acquire_company,
              'Quit': HighTech.quit, 'RemoveEmployee': HighTech.remove_employee, 'CompanyValue:': HighTech.company_value}
     lines = 50000
-    for i in range(1):
+    for i in range(100):
         test_gen.TestGen(f'in{i}.txt', lines)
-    for i in range(1):
+    for i in range(100):
         out_file = open(f'out{i}.txt', 'w+')
         with open(f'in{i}.txt') as file:
             lines = file.readlines()
@@ -182,6 +189,8 @@ if __name__ == '__main__':
                             out_file.write(f'{line[0]} {out}\n')
                         else:
                             out_file.write(f'{line[0]}: {out}\n')
+                except InitFailed:
+                    break
                 except Fail:
                     if line[0] == 'CompanyValue:':
                         out_file.write(f'{line[0]} FAILURE\n')
