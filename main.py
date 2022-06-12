@@ -149,6 +149,8 @@ class HighTech:
         if whole:
             return str(line)
         else:
+            if str(line).split('.')[1][0] == '9' and float(str(line).split('.')[1][1:]) > 0.5:
+                return str(round(line, 0))
             return str(round(line, 1))
 
 
