@@ -17,7 +17,7 @@ class TestGen:
         self.total_emp = 0
         with open(path, 'w+') as file:
             file.write(f'Init {self.companies}\n')
-            for i in range(10000):
+            for i in range(400):
                 func = random.randint(0, len(self.funcs) - 1)
                 file.write(self.funcs[func][1]() + '\n')
             file.write('Quit')
