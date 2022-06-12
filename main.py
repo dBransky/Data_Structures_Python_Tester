@@ -154,7 +154,7 @@ class HighTech:
 
     def format_print(self, line, _, whole):
         if whole:
-            return str(line)
+            return str(line).split('.')[0]
         else:
             if str(line).split('.')[1][0] == '9' and float('0.' + str(line).split('.')[1][1:]) > 0.5:
                 return str(round(line, 0))
@@ -165,11 +165,12 @@ if __name__ == '__main__':
     funcs = {'Init': HighTech, 'AddEmployee': HighTech.add_employee, 'EmployeeSalaryIncrease': HighTech.salary_increase,
              'PromoteEmployee': HighTech.promote_employee, 'AverageBumpGradeBetweenSalaryByGroup': HighTech.avg_grades,
              'SumOfBumpGradeBetweenTopWorkersByGroup': HighTech.sum_grades, 'AcquireCompany': HighTech.acquire_company,
-             'Quit': HighTech.quit, 'RemoveEmployee': HighTech.remove_employee, 'CompanyValue:': HighTech.company_value}
-    lines = 50000
-    for i in range(100):
+             'Quit': HighTech.quit, 'RemoveEmployee': HighTech.remove_employee, 'CompanyValue:': HighTech.company_value,
+             'BumpGradeToEmployees': HighTech.bump_grades}
+    lines = 20000
+    for i in range(1):
         test_gen.TestGen(f'in{i}.txt', lines)
-    for i in range(100):
+    for i in range(1):
         out_file = open(f'out{i}.txt', 'w+')
         with open(f'in{i}.txt') as file:
             lines = file.readlines()
