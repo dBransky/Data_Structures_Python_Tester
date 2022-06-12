@@ -2,7 +2,7 @@
 
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-import filecmp
+import test_gen
 
 
 class Employee:
@@ -97,7 +97,7 @@ class HighTech:
             emp.sort(key=lambda x: (x.salary, x.id), reverse=True)
             grades = [x.grade for x in emp]
             if m <= len(grades):
-                return self.format_print(str(sum(grades[:int(m)])), True)
+                return self.format_print((sum(grades[:int(m)])), False, True)
             raise Fail()
         while com_id in self.deleted_companies:
             com_id = self.deleted_companies[com_id]
@@ -105,7 +105,7 @@ class HighTech:
         emp.sort(key=lambda x: (x.salary, x.id), reverse=True)
         grades = [x.grade for x in emp]
         if m <= len(grades):
-            return self.format_print(str(sum(grades[:int(m)])), True)
+            return self.format_print((sum(grades[:int(m)])), False, True)
         raise Fail()
 
     def avg_grades(self, com_id, min, max):
@@ -117,7 +117,7 @@ class HighTech:
             in_range.sort(key=lambda x: (x.salary, x.id), reverse=True)
             grades = [x.grade for x in in_range]
             if 0 != len(grades):
-                return self.format_print(str(sum(grades) / len(grades)), False)
+                return self.format_print((sum(grades) / len(grades)), True, False)
             raise Fail()
         while com_id in self.deleted_companies:
             com_id = self.deleted_companies[com_id]
@@ -125,7 +125,7 @@ class HighTech:
         in_range.sort(key=lambda x: (x.salary, x.id), reverse=True)
         grades = [x.grade for x in in_range]
         if 0 != len(grades):
-            return self.format_print(str(sum(grades) / len(grades)), False)
+            return self.format_print((sum(grades) / len(grades)), True, False)
         raise Fail()
 
     def bump_grades(self, min, max, grade):
@@ -141,24 +141,25 @@ class HighTech:
         return 'done.'
 
     def company_value(self, id):
-        if id<=0 or id>self.k:
+        if id <= 0 or id > self.k:
             raise Invalid()
-        return self.format_print(str(float(self.company_vals[id])),False)
+        return self.format_print((float(self.company_vals[id])), True, False)
 
-    def format_print(self, line, round):
-        if (line.split('.')[1]) == '0':
-            if round:
-                return line.split('.')[0]
-            else:
-                return line
+    def format_print(self, line, round, whole):
+        if whole:
+            return str(line)
         else:
-            return line.split('.')[0] + '.' + line.split('.')[1][0]
+            return str(round(line, 1))
+
 
 if __name__ == '__main__':
     funcs = {'Init': HighTech, 'AddEmployee': HighTech.add_employee, 'EmployeeSalaryIncrease': HighTech.salary_increase,
              'PromoteEmployee': HighTech.promote_employee, 'AverageBumpGradeBetweenSalaryByGroup': HighTech.avg_grades,
              'SumOfBumpGradeBetweenTopWorkersByGroup': HighTech.sum_grades, 'AcquireCompany': HighTech.acquire_company,
              'Quit': HighTech.quit, 'RemoveEmployee': HighTech.remove_employee, 'CompanyValue:': HighTech.company_value}
+    lines = 50000
+    for i in range(100):
+        test_gen.TestGen(f'in{i}.txt', lines)
     for i in range(100):
         out_file = open(f'out{i}.txt', 'w+')
         with open(f'in{i}.txt') as file:
@@ -189,4 +190,5 @@ if __name__ == '__main__':
                         out_file.write(f'{line[0]} INVALID_INPUT\n')
                     else:
                         out_file.write(f'{line[0]}: INVALID_INPUT\n')
+        print(f'file {i} generated')
         out_file.close()
