@@ -145,7 +145,7 @@ class HighTech:
             raise Invalid()
         return self.format_print((float(self.company_vals[id])), True, False)
 
-    def format_print(self, line, round, whole):
+    def format_print(self, line, _, whole):
         if whole:
             return str(line)
         else:
