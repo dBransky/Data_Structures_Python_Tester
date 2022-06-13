@@ -2,6 +2,9 @@
 
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+import difflib
+import filecmp
+
 import test_gen
 
 
@@ -99,6 +102,8 @@ class HighTech:
     def sum_grades(self, com_id, m):
         if m <= 0 or com_id < 0 or com_id > self.k:
             raise Invalid()
+        if com_id == 5 and m == 11:
+            x = 6
         if com_id == 0:
             emp = [emp for comp in list(self.companies.values()) for emp in comp.values() if emp.salary != 0]
             emp.sort(key=lambda x: (x.salary, x.id), reverse=True)
@@ -124,6 +129,8 @@ class HighTech:
             in_range.sort(key=lambda x: (x.salary, x.id), reverse=True)
             grades = [x.grade for x in in_range]
             if 0 != len(grades):
+                if '4.2' == self.format_print((sum(grades) / len(grades)), True, False):
+                    z = 1
                 return self.format_print((sum(grades) / len(grades)), True, False)
             raise Fail()
         while com_id in self.deleted_companies:
@@ -132,6 +139,8 @@ class HighTech:
         in_range.sort(key=lambda x: (x.salary, x.id), reverse=True)
         grades = [x.grade for x in in_range]
         if 0 != len(grades):
+            if '4.2' == self.format_print((sum(grades) / len(grades)), True, False):
+                z = 1
             return self.format_print((sum(grades) / len(grades)), True, False)
         raise Fail()
 
@@ -150,6 +159,8 @@ class HighTech:
     def company_value(self, id):
         if id <= 0 or id > self.k:
             raise Invalid()
+        if '4.2' == self.format_print((float(self.company_vals[id])), True, False):
+            z = 1
         return self.format_print((float(self.company_vals[id])), True, False)
 
     def format_print(self, line, _, whole):
@@ -167,10 +178,10 @@ if __name__ == '__main__':
              'SumOfBumpGradeBetweenTopWorkersByGroup': HighTech.sum_grades, 'AcquireCompany': HighTech.acquire_company,
              'Quit': HighTech.quit, 'RemoveEmployee': HighTech.remove_employee, 'CompanyValue:': HighTech.company_value,
              'BumpGradeToEmployees': HighTech.bump_grades}
-    lines = 20000
-    for i in range(1):
-        test_gen.TestGen(f'in{i}.txt', lines)
-    for i in range(1):
+    lines = 3000
+    for i in range(20):
+         test_gen.TestGen(f'in{i}.txt', lines)
+    for i in range(20):
         out_file = open(f'out{i}.txt', 'w+')
         with open(f'in{i}.txt') as file:
             lines = file.readlines()
