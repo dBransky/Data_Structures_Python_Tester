@@ -1,4 +1,4 @@
-# Data_Structes_Python_Tester
+# Data_Structures_Python_Tester
 main.py chose amount of lines and amount 
 ![image](https://user-images.githubusercontent.com/79902268/173768796-8fdf39b0-31d9-4d9d-9762-bdf72cf20c43.png)
 
