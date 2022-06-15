@@ -129,8 +129,6 @@ class HighTech:
             in_range.sort(key=lambda x: (x.salary, x.id), reverse=True)
             grades = [x.grade for x in in_range]
             if 0 != len(grades):
-                if '4.2' == self.format_print((sum(grades) / len(grades)), True, False):
-                    z = 1
                 return self.format_print((sum(grades) / len(grades)), True, False)
             raise Fail()
         while com_id in self.deleted_companies:
@@ -139,8 +137,6 @@ class HighTech:
         in_range.sort(key=lambda x: (x.salary, x.id), reverse=True)
         grades = [x.grade for x in in_range]
         if 0 != len(grades):
-            if '4.2' == self.format_print((sum(grades) / len(grades)), True, False):
-                z = 1
             return self.format_print((sum(grades) / len(grades)), True, False)
         raise Fail()
 
@@ -159,8 +155,6 @@ class HighTech:
     def company_value(self, id):
         if id <= 0 or id > self.k:
             raise Invalid()
-        if '4.2' == self.format_print((float(self.company_vals[id])), True, False):
-            z = 1
         return self.format_print((float(self.company_vals[id])), True, False)
 
     def format_print(self, line, _, whole):
@@ -178,10 +172,11 @@ if __name__ == '__main__':
              'SumOfBumpGradeBetweenTopWorkersByGroup': HighTech.sum_grades, 'AcquireCompany': HighTech.acquire_company,
              'Quit': HighTech.quit, 'RemoveEmployee': HighTech.remove_employee, 'CompanyValue:': HighTech.company_value,
              'BumpGradeToEmployees': HighTech.bump_grades}
-    lines = 3000
-    for i in range(20):
-         test_gen.TestGen(f'in{i}.txt', lines)
-    for i in range(20):
+    lines = 25000
+    tests = 100
+    for i in range(tests):
+        test_gen.TestGen(f'in{i}.txt', lines)
+    for i in range(tests):
         out_file = open(f'out{i}.txt', 'w+')
         with open(f'in{i}.txt') as file:
             lines = file.readlines()

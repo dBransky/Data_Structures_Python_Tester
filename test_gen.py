@@ -12,7 +12,7 @@ class TestGen:
                       ('AcquireCompany', self.rand_test_acq),
                       ('RemoveEmployee', self.rand_test_rem),
                       ('CompanyValue', self.rand_test_val),
-                      # ('BumpGradeToEmployees', self.rand_test_bump)
+                      ('BumpGradeToEmployees', self.rand_test_bump)
                       ]
 
         self.companies = random.randint(25, 60)
